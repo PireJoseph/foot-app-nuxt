@@ -37,8 +37,6 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-
 export default {
   auth: 'guest',
   // page component definitions
@@ -57,9 +55,9 @@ export default {
     async register() {
       this.loading = true
       try {
-        delete axios.defaults.headers.common.Authorization
-        const response = await axios.post(
-          'http://localhost:1337/auth/local/register',
+        delete this.$axios.defaults.headers.common.Authorization
+        const response = await this.$axios.post(
+          '/auth/local/register',
           this.registration
         )
         const user = response.data.user

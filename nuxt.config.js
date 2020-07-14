@@ -64,7 +64,9 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:1337',
+  },
 
   router: {
     middleware: ['auth'],
@@ -75,7 +77,7 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: 'http://localhost:1337/auth/local',
+            url: '/auth/local',
             method: 'post',
             propertyName: 'jwt',
           },

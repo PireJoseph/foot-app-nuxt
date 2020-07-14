@@ -68,7 +68,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data() {
     return {
@@ -112,7 +111,7 @@ export default {
     },
     logout() {
       this.$auth.logout()
-      delete axios.defaults.headers.common.Authorization
+      delete this.$axios.defaults.headers.common.Authorization
     },
   },
 }
