@@ -1,15 +1,10 @@
 <template>
-  <section class="section">
-    <h2 class="title is-3 has-text-grey">
-      "Profile"
-    </h2>
-    <h3 class="subtitle is-6 has-text-grey">
-      Author:
-      <a href="https://github.com/anteriovieira">
-        {{ user }}
-      </a>
-    </h3>
-  </section>
+  <div>
+    <PageTitle title="Profile" sub-title="Manage your account" />
+    <section class="section">
+      {{ user }}
+    </section>
+  </div>
 </template>
 
 <script>

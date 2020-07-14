@@ -1,11 +1,7 @@
 <template>
   <div>
+    <PageTitle title="Register" />
     <section class="section">
-      <h2 class="title has-text-grey">
-        Register
-      </h2>
-    </section>
-    <section>
       <form>
         <b-field label="Username">
           <b-input v-model="registration.username" maxlength="30"></b-input>

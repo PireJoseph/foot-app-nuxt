@@ -1,13 +1,5 @@
 <template>
-  <section class="section">
-    <h2 class="title is-3 has-text-grey">
-      "Matchs"
-    </h2>
-    <h3 class="subtitle is-6 has-text-grey">
-      Author:
-      <a href="https://github.com/anteriovieira">
-        Antério Vieira
-      </a>
-    </h3>
-  </section>
+  <div>
+    <PageTitle title="Matchs" sub-title="Things get real here!" />
+  </div>
 </template>
