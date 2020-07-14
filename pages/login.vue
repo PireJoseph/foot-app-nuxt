@@ -1,44 +1,110 @@
 <template>
   <div>
+    <PageTitle title="Login" sub-title="Let's give us your credentials" />
     <section class="section">
-      <h2 class="title has-text-grey">
-        Login
-      </h2>
-    </section>
-    <section>
-      <form>
-        <b-field label="Email">
-          <b-input v-model="login.identifier" type="email" maxlength="30">
-          </b-input>
-        </b-field>
-        <b-field label="Password">
-          <b-input v-model="login.password" type="password" password-reveal>
-          </b-input>
-        </b-field>
-        <div class="buttons">
-          <b-button
-            tag="input"
-            type="is-success"
-            value="Login"
-            expanded
-            :loading="loading"
-            @click="userLogin"
-          />
-        </div>
-      </form>
+      <ValidationObserver v-slot="{ invalid }">
+        <form>
+          <!-- Email field -->
+          <ValidationProvider
+            v-slot="{ errors }"
+            rules="email|min:8|max:30|required"
+          >
+            <b-field
+              label="Email"
+              :type="{
+                'is-danger': errors[0],
+                'is-success': errors.length,
+              }"
+              :message="errors[0]"
+            >
+              <b-input v-model="login.identifier" type="email" maxlength="30">
+              </b-input>
+            </b-field>
+          </ValidationProvider>
+
+          <!-- Password field -->
+          <ValidationProvider
+            v-slot="{ errors }"
+            rules="min:8|max:30|required"
+            vid="password"
+          >
+            <b-field
+              label="Password"
+              :type="{
+                'is-danger': errors[0],
+                'is-success': errors.length,
+              }"
+              :message="errors[0]"
+            >
+              <b-input
+                v-model="login.password"
+                type="password"
+                password-reveal
+                maxlength="30"
+              >
+              </b-input>
+            </b-field>
+          </ValidationProvider>
+
+          <!-- Confirm field -->
+          <ValidationProvider
+            v-slot="{ errors }"
+            rules="min:8|max:30|required|confirmed:password"
+          >
+            <b-field
+              label="Confirm password"
+              :type="{
+                'is-danger': errors[0],
+                'is-success': errors.length,
+              }"
+              :message="errors[0]"
+            >
+              <b-input
+                v-model="passwordConfirmation"
+                type="password"
+                password-reveal
+                maxlength="30"
+              >
+              </b-input>
+            </b-field>
+          </ValidationProvider>
+
+          <!-- login button -->
+          <div class="buttons">
+            <b-button
+              tag="input"
+              :type="{
+                'is-danger': invalid,
+                'is-success': !invalid,
+              }"
+              value="Login"
+              expanded
+              :disabled="invalid"
+              :loading="loading"
+              @click="userLogin"
+            />
+          </div>
+        </form>
+      </ValidationObserver>
     </section>
   </div>
 </template>
 <script>
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
+
 export default {
   auth: 'guest',
-  // page component definitions
+  components: {
+    ValidationObserver,
+    ValidationProvider,
+  },
   data() {
     return {
       login: {
         identifier: 'josephpire.dev@gmail.com',
         password: 'zryt2465',
       },
+      passwordConfirmation: 'zryt2465',
       errorMesssage: String,
       loading: false,
     }
@@ -62,3 +128,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.buttons {
+  margin-top: 2em;
+}
+</style>
