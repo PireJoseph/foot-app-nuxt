@@ -34,7 +34,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: ['~/plugins/vee-validate.js'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -103,5 +103,6 @@ export default {
     babel: {
       plugins: ['@babel/plugin-proposal-optional-chaining'],
     },
+    transpile: ['vee-validate/dist/rules'],
   },
 }
