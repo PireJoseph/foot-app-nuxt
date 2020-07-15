@@ -1,74 +1,85 @@
 <template>
-  <div>
-    <nav
-      class="navbar header has-shadow is-black"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div class="navbar-brand">
-        <div class="navbar-item">
-          <h2>FoorApp</h2>
-        </div>
-        <div class="navbar-burger" @click="toggleMenu">
-          <span />
-          <span />
-          <span />
-        </div>
-      </div>
-      <div
-        id="mobile-navbar-menu"
-        class="navbar-menu"
-        :class="{ 'is-active': mobileMenuOpen }"
+  <div class="page-container">
+    <section class="nav-container">
+      <nav
+        class="navbar header has-shadow is-black"
+        role="navigation"
+        aria-label="main navigation"
       >
-        <div class="navbar-start">
-          <nuxt-link
-            v-for="(item, key) of itemShown"
-            :key="key"
-            :to="item.to"
-            class="navbar-item"
-            exact-active-class="is-active"
-          >
-            <b-icon :icon="item.icon" />
-            <span class="ml-2">{{ item.title }}</span>
-          </nuxt-link>
+        <div class="navbar-brand">
+          <div class="navbar-item">
+            <h2>FoorApp</h2>
+          </div>
+          <div class="navbar-burger" @click="toggleMenu">
+            <span />
+            <span />
+            <span />
+          </div>
         </div>
-        <div v-if="$auth.loggedIn" class="navbar-end">
-          <a class="navbar-item" @click="logout">
-            <b-icon :icon="'logout'" />
-            <span class="ml-2">Logout</span>
-          </a>
+        <div
+          id="mobile-navbar-menu"
+          class="navbar-menu"
+          :class="{ 'is-active': mobileMenuOpen }"
+        >
+          <div class="navbar-start">
+            <nuxt-link
+              v-for="(item, key) of itemShown"
+              :key="key"
+              :to="item.to"
+              class="navbar-item"
+              exact-active-class="is-active"
+            >
+              <b-icon :icon="item.icon" />
+              <span class="ml-2">{{ item.title }}</span>
+            </nuxt-link>
+          </div>
+          <div v-if="$auth.loggedIn" class="navbar-end">
+            <a class="navbar-item" @click="logout">
+              <b-icon :icon="'logout'" />
+              <span class="ml-2">Logout</span>
+            </a>
+          </div>
+          <div v-if="!$auth.loggedIn" class="navbar-end">
+            <nuxt-link
+              :to="'register'"
+              class="navbar-item"
+              exact-active-class="is-active"
+            >
+              <b-icon :icon="'account-plus-outline'" />
+              <span class="ml-2">Register</span>
+            </nuxt-link>
+            <nuxt-link
+              :to="'login'"
+              class="navbar-item"
+              exact-active-class="is-active"
+            >
+              <b-icon :icon="'login'" />
+              <span class="ml-2">Login</span>
+            </nuxt-link>
+          </div>
         </div>
-        <div v-if="!$auth.loggedIn" class="navbar-end">
-          <nuxt-link
-            :to="'register'"
-            class="navbar-item"
-            exact-active-class="is-active"
-          >
-            <b-icon :icon="'account-plus-outline'" />
-            <span class="ml-2">Register</span>
-          </nuxt-link>
-          <nuxt-link
-            :to="'login'"
-            class="navbar-item"
-            exact-active-class="is-active"
-          >
-            <b-icon :icon="'login'" />
-            <span class="ml-2">Login</span>
-          </nuxt-link>
-        </div>
-      </div>
-    </nav>
+      </nav>
+    </section>
 
-    <section class="main-content">
-      <div class="container">
+    <section class="main-content main-container">
+      <main class="container">
         <nuxt />
-      </div>
+      </main>
+    </section>
+
+    <section class="footer-container">
+      <Footer />
     </section>
   </div>
 </template>
 
 <script>
+import Footer from '~/layouts/partials/footer'
+
 export default {
+  components: {
+    Footer,
+  },
   data() {
     return {
       items: [
@@ -116,3 +127,14 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.page-container {
+  display: flex;
+  flex-direction: column;
+
+  .main-container {
+    flex-grow: 1;
+  }
+}
+</style>

@@ -5,3 +5,8 @@
 .expanded {
     width: 100%;
 }
+
+html, body, #__nuxt, #__layout, .page-container {
+  height: 100%;
+  min-height: 100%;
+}

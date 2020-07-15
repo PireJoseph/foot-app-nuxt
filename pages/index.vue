@@ -2,7 +2,7 @@
   <div>
     <PageTitle title="Home" :sub-title="getGreetingMessage()" />
     <section class="section">
-      <div class="columns is-mobile">
+      <div class="columns is-desktop">
         <card title="Free" icon="github">
           Open source on
           <a href="https://github.com/buefy/buefy">
