@@ -46,39 +46,16 @@
             </b-field>
           </ValidationProvider>
 
-          <!-- Confirm field -->
-          <ValidationProvider
-            v-slot="{ errors }"
-            rules="min:8|max:30|required|confirmed:password"
-          >
-            <b-field
-              label="Confirm password"
-              :type="{
-                'is-danger': errors[0],
-                'is-success': errors.length,
-              }"
-              :message="errors[0]"
-            >
-              <b-input
-                v-model="passwordConfirmation"
-                type="password"
-                password-reveal
-                maxlength="30"
-              >
-              </b-input>
-            </b-field>
-          </ValidationProvider>
-
           <!-- login button -->
           <div class="buttons">
             <b-button
               tag="input"
+              expanded
               :type="{
                 'is-danger': invalid,
                 'is-success': !invalid,
               }"
               value="Login"
-              expanded
               :disabled="invalid"
               :loading="loading"
               @click="userLogin"
@@ -104,7 +81,6 @@ export default {
         identifier: 'josephpire.dev@gmail.com',
         password: 'zryt2465',
       },
-      passwordConfirmation: 'zryt2465',
       errorMesssage: String,
       loading: false,
     }
