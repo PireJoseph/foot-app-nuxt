@@ -1,35 +1,37 @@
 <template>
   <div>
-    <PageTitle title="Home" :sub-title="getGreetingMessage()" />
+    <PageTitle title="Home" sub-title="Welcome bud" />
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container">
+          <h3 class="subtitle is-5">
+            The app that help you find players and organize epic football game
+          </h3>
+        </div>
+      </div>
+    </section>
+
     <section class="section">
       <div class="columns is-desktop">
-        <card title="Free" icon="github">
-          Open source on
-          <a href="https://github.com/buefy/buefy">
-            GitHub
-          </a>
+        <card title="Free" icon="currency-eur">
+          Completely free
         </card>
 
         <card title="Responsive" icon="cellphone-link">
+          Works on
           <b class="has-text-grey">
             Every
           </b>
-          component is responsive
+          platform
         </card>
 
-        <card title="Modern" icon="alert-decagram">
-          Built with
-          <a href="https://vuejs.org/">
-            Vue.js
-          </a>
-          and
-          <a href="http://bulma.io/">
-            Bulma
-          </a>
+        <card title="Modern" icon="robot">
+          Cutting edge web technologies
         </card>
 
-        <card title="Lightweight" icon="arrange-bring-to-front">
-          No other internal dependency
+        <card title="Lightweight" icon="feather">
+          Wont burn your 3G data
         </card>
       </div>
     </section>
