@@ -12,8 +12,8 @@
             <b-field
               label="Email"
               :type="{
-                'is-danger': errors[0],
-                'is-success': errors.length,
+                'is-danger': errors.length || loginErrorMessage,
+                'is-success': !errors.length && !loginErrorMessage,
               }"
               :message="errors[0]"
             >
@@ -31,16 +31,17 @@
             <b-field
               label="Password"
               :type="{
-                'is-danger': errors[0],
-                'is-success': errors.length,
+                'is-danger': errors.length || loginErrorMessage,
+                'is-success': !errors.length && !loginErrorMessage,
               }"
-              :message="errors[0]"
+              :message="errors[0] || loginErrorMessage"
             >
               <b-input
                 v-model="login.password"
                 type="password"
                 password-reveal
                 maxlength="30"
+                @input="loginErrorMessage = ''"
               >
               </b-input>
             </b-field>
@@ -52,8 +53,8 @@
               tag="input"
               expanded
               :type="{
-                'is-danger': invalid,
-                'is-success': !invalid,
+                'is-danger': invalid || loginErrorMessage,
+                'is-success': !invalid && !loginErrorMessage,
               }"
               value="Login"
               :disabled="invalid"
@@ -81,7 +82,8 @@ export default {
         identifier: 'josephpire.dev@gmail.com',
         password: 'zryt2465',
       },
-      errorMesssage: String,
+      errorMesssage: '',
+      loginErrorMessage: '',
       loading: false,
     }
   },
@@ -97,6 +99,9 @@ export default {
         this.$auth.setUser(user)
         this.$auth.setToken('local', `Bearer ${token}`)
       } catch (err) {
+        if (err.response.status === 400) {
+          this.loginErrorMessage = 'Incorrect credentials'
+        }
         this.errorMesssage = 'login failed'
       }
       this.loading = false

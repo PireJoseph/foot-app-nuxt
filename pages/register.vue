@@ -9,8 +9,8 @@
             <b-field
               label="Username"
               :type="{
-                'is-danger': errors[0] || usernameErrorMesssage,
-                'is-success': errors.length,
+                'is-danger': errors.length || usernameErrorMesssage,
+                'is-success': !errors.length && !usernameErrorMesssage,
               }"
               :message="errors[0] || usernameErrorMesssage"
             >
@@ -30,8 +30,8 @@
             <b-field
               label="Email"
               :type="{
-                'is-danger': errors[0] || emailErrorMessage,
-                'is-success': errors.length,
+                'is-danger': errors.length || emailErrorMessage,
+                'is-success': errors.length && !usernameErrorMesssage,
               }"
               :message="errors[0] || emailErrorMessage"
             >
@@ -54,8 +54,8 @@
             <b-field
               label="Password"
               :type="{
-                'is-danger': errors[0],
-                'is-success': errors.length,
+                'is-danger': errors.length,
+                'is-success': errors.length && !usernameErrorMesssage,
               }"
               :message="errors[0]"
             >
@@ -77,8 +77,8 @@
             <b-field
               label="Confirm password"
               :type="{
-                'is-danger': errors[0],
-                'is-success': errors.length,
+                'is-danger': errors.length,
+                'is-success': !errors.length,
               }"
               :message="errors[0]"
             >
