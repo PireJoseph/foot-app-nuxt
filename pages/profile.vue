@@ -229,9 +229,10 @@ export default {
     ValidationProvider,
   },
   async asyncData(context) {
+    console.log(context.env)
     const token = context.app.$auth.getToken('local')
     axios.defaults.headers.common = { Authorization: `${token}` }
-    const { data } = await axios.get(`http://localhost:1337/users/me`)
+    const { data } = await axios.get(context.env.API_BASE_URL + `/users/me`)
     // set default user.player datas
     if (data.birthDate !== null) {
       // used to make the date picker working
@@ -261,7 +262,7 @@ export default {
     getAvatarUrl() {
       let avatarUrl = ''
       if (this.user.avatar) {
-        avatarUrl = 'http://localhost:1337' + this.user.avatar.url
+        avatarUrl = process.env.API_BASE_URL + this.user.avatar.url
       }
       return avatarUrl
     },

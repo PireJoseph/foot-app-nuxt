@@ -48,6 +48,8 @@ export default {
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
+    // DotEnv
+    '@nuxtjs/dotenv',
   ],
   /*
    ** Nuxt.js modules
