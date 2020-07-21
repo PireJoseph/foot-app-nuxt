@@ -229,7 +229,6 @@ export default {
     ValidationProvider,
   },
   async asyncData(context) {
-    console.log(context.env)
     const token = context.app.$auth.getToken('local')
     axios.defaults.headers.common = { Authorization: `${token}` }
     const { data } = await axios.get(context.env.API_BASE_URL + `/users/me`)
