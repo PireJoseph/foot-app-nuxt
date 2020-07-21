@@ -1,7 +1,7 @@
 <template>
   <div id="profile-content">
     <PageTitle title="Profile" sub-title="Manage your account" />
-    <figure v-if="user.avatar.url" id="avatar-container" class="image">
+    <figure v-if="user.avatar" id="avatar-container" class="image">
       <img id="avatar-image" class="is-rounded" :src="getAvatarUrl" />
     </figure>
     <section id="form-container" class="section">
@@ -259,7 +259,11 @@ export default {
   },
   computed: {
     getAvatarUrl() {
-      return 'http://localhost:1337' + this.user.avatar.url
+      let avatarUrl = ''
+      if (this.user.avatar) {
+        avatarUrl = 'http://localhost:1337' + this.user.avatar.url
+      }
+      return avatarUrl
     },
   },
   methods: {
@@ -296,13 +300,9 @@ export default {
         const response = await this.$axios.post('/upload', formData)
         const avatar = response.data[0]
         this.user.avatar = avatar
-        console.log(avatar)
       } catch (error) {
         this.errorMesssage = 'avatar upload failed :c'
       }
-    },
-    getAvarUrl(realtiveUrl) {
-      return 'http://localhost:1337' + realtiveUrl
     },
     getDate10YeardAgo() {
       const date = new Date()
