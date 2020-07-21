@@ -20,6 +20,7 @@
           id="mobile-navbar-menu"
           class="navbar-menu"
           :class="{ 'is-active': mobileMenuOpen }"
+          @click="closeMenu"
         >
           <div class="navbar-start">
             <nuxt-link
@@ -120,6 +121,9 @@ export default {
     toggleMenu() {
       this.mobileMenuOpen = !this.mobileMenuOpen
     },
+    closeMenu() {
+      this.mobileMenuOpen = false
+    },
     logout() {
       this.$auth.logout()
       delete this.$axios.defaults.headers.common.Authorization
@@ -136,5 +140,8 @@ export default {
   .main-container {
     flex-grow: 1;
   }
+}
+.is-active {
+  color: #7957d5 !important;
 }
 </style>
