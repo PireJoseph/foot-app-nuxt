@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div id="profile-content">
     <PageTitle title="Profile" sub-title="Manage your account" />
-    <section class="section">
-      {{ user }}
-    </section>
-    <section class="section">
+    <figure v-if="user.avatar.url" id="avatar-container" class="image">
+      <img id="avatar-image" class="is-rounded" :src="getAvatarUrl" />
+    </figure>
+    <section id="form-container" class="section">
       <ValidationObserver v-slot="{ invalid }">
-        <form>
+        <form ref="profileForm">
           <!-- username -->
           <ValidationProvider v-slot="{ errors }" rules="min:8|max:30|required">
             <b-field
@@ -19,6 +19,7 @@
             >
               <b-input
                 v-model="user.username"
+                name="username"
                 maxlength="30"
                 @input="usernameErrorMesssage = ''"
               ></b-input>
@@ -40,6 +41,7 @@
             >
               <b-input
                 v-model="user.email"
+                name="email"
                 type="email"
                 maxlength="30"
                 @input="emailErrorMessage = ''"
@@ -60,6 +62,7 @@
             >
               <b-input
                 v-model="user.phone"
+                name="phone"
                 maxlength="30"
                 @input="phoneErrorMessage = ''"
               >
@@ -79,6 +82,7 @@
             >
               <b-input
                 v-model="user.firstName"
+                name="firstName"
                 maxlength="30"
                 @input="firstNameErrorMessage = ''"
               >
@@ -98,6 +102,7 @@
             >
               <b-input
                 v-model="user.lastName"
+                name="lastName"
                 maxlength="30"
                 @input="lastNameErrorMessage = ''"
               >
@@ -118,6 +123,7 @@
               >
                 <b-datepicker
                   v-model="user.birthDate"
+                  name="birthDate"
                   :min-date="getDate100YearsAgo()"
                   :max-date="getDate10YeardAgo()"
                   :years-range="[-100, 100]"
@@ -143,6 +149,7 @@
               >
                 <b-numberinput
                   v-model="user.height"
+                  name="height"
                   @input="heightErrorMesssage = ''"
                 ></b-numberinput>
               </b-field>
@@ -165,8 +172,28 @@
               >
                 <b-numberinput
                   v-model="user.weight"
+                  name="weight"
                   @input="weightErrorMesssage = ''"
                 ></b-numberinput>
+              </b-field>
+            </ValidationProvider>
+          </div>
+
+          <!-- avatar -->
+          <div id="avatar-upload-container">
+            <ValidationProvider v-slot="{ errors }" rules="">
+              <b-field class="file">
+                <b-upload name="avatar" expanded @input="onAvatarInput">
+                  <a class="button is-primary is-fullwidth">
+                    <b-icon icon="upload"> </b-icon>
+                    <span v-if="!errors.length">
+                      Upload avatar
+                    </span>
+                    <span v-else>
+                      {{ errors[0] || avatarMesssage }}
+                    </span>
+                  </a>
+                </b-upload>
               </b-field>
             </ValidationProvider>
           </div>
@@ -225,20 +252,21 @@ export default {
       weightErrorMesssage: '',
       phoneErrorMessage: '',
       errorMessage: '',
+      avatarMesssage: '',
       loading: false,
       user: Object,
     }
   },
+  computed: {
+    getAvatarUrl() {
+      return 'http://localhost:1337' + this.user.avatar.url
+    },
+  },
   methods: {
     async update() {
-      console.log(this.$axios.defaults.headers.common.Authorization)
       this.loading = true
       try {
-        const response = await this.$axios.put(
-          '/users/' + this.user.id,
-          this.user
-        )
-        console.log(JSON.stringify(response))
+        await this.$axios.put('/users/' + this.user.id, this.user)
       } catch (error) {
         if (error.response.status === 400) {
           switch (this.getMessagefromError(error).id) {
@@ -256,6 +284,25 @@ export default {
         }
       }
       this.loading = false
+    },
+    async onAvatarInput(file) {
+      const formData = new FormData()
+      formData.append('ref', 'user')
+      formData.append('refId', this.user.id)
+      formData.append('field', 'avatar')
+      formData.append('source', 'users-permissions')
+      formData.append('files', file, file.name)
+      try {
+        const response = await this.$axios.post('/upload', formData)
+        const avatar = response.data[0]
+        this.user.avatar = avatar
+        console.log(avatar)
+      } catch (error) {
+        this.errorMesssage = 'avatar upload failed :c'
+      }
+    },
+    getAvarUrl(realtiveUrl) {
+      return 'http://localhost:1337' + realtiveUrl
     },
     getDate10YeardAgo() {
       const date = new Date()
@@ -280,5 +327,20 @@ export default {
 }
 #weight-container {
   margin-top: 1em;
+}
+#avatar-upload-container {
+  margin-top: 2em;
+}
+#avatar-container {
+  min-height: 128px;
+  margin: 0 auto;
+}
+#form-container {
+  padding-top: 0;
+}
+#avatar-image {
+  width: 128px;
+  height: auto;
+  margin: 0 auto;
 }
 </style>
