@@ -181,21 +181,19 @@
 
           <!-- avatar -->
           <div id="avatar-upload-container">
-            <ValidationProvider v-slot="{ errors }" rules="">
-              <b-field class="file">
-                <b-upload name="avatar" expanded @input="onAvatarInput">
-                  <a class="button is-primary is-fullwidth">
-                    <b-icon icon="upload"> </b-icon>
-                    <span v-if="!errors.length">
-                      Upload avatar
-                    </span>
-                    <span v-else>
-                      {{ errors[0] || avatarMesssage }}
-                    </span>
-                  </a>
-                </b-upload>
-              </b-field>
-            </ValidationProvider>
+            <b-field class="file">
+              <b-upload name="avatar" expanded @input="onAvatarInput">
+                <a class="button is-primary is-fullwidth">
+                  <b-icon icon="upload"> </b-icon>
+                  <span v-if="!avatarMesssage">
+                    Upload avatar
+                  </span>
+                  <span v-else>
+                    {{ avatarMesssage }}
+                  </span>
+                </a>
+              </b-upload>
+            </b-field>
           </div>
 
           <!-- Update button -->
