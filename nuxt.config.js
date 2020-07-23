@@ -68,7 +68,10 @@ export default {
    */
   axios: {
     baseURL: 'http://localhost:1337',
+    // proxy: true,
   },
+
+  proxy: {},
 
   router: {
     middleware: ['auth'],
