@@ -5,7 +5,11 @@
       <ValidationObserver v-slot="{ invalid }">
         <form>
           <!-- username -->
-          <ValidationProvider v-slot="{ errors }" rules="min:8|max:30|required">
+          <ValidationProvider
+            immediate
+            v-slot="{ errors }"
+            rules="min:8|max:30|required"
+          >
             <b-field
               label="Username"
               :type="{
@@ -24,6 +28,7 @@
 
           <!-- Email field -->
           <ValidationProvider
+            immediate
             v-slot="{ errors }"
             rules="email|min:8|max:30|required"
           >
@@ -47,6 +52,7 @@
 
           <!-- Password field -->
           <ValidationProvider
+            immediate
             v-slot="{ errors }"
             rules="min:8|max:30|required"
             vid="password"
@@ -71,6 +77,7 @@
 
           <!-- Confirm field -->
           <ValidationProvider
+            immediate
             v-slot="{ errors }"
             rules="min:8|max:30|required|confirmed:password"
           >
@@ -125,11 +132,11 @@ export default {
   data() {
     return {
       registration: {
-        username: 'username',
-        email: 'mail@provider.com',
-        password: 'yourPassword',
+        username: '',
+        email: '',
+        password: '',
       },
-      passwordConfirmation: 'yourPassword',
+      passwordConfirmation: '',
       usernameErrorMesssage: '',
       emailErrorMessage: '',
       errorMessage: '',
