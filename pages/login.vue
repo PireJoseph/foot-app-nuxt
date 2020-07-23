@@ -6,6 +6,7 @@
         <form>
           <!-- Email field -->
           <ValidationProvider
+            immediate
             v-slot="{ errors }"
             rules="email|min:8|max:30|required"
           >
@@ -24,6 +25,7 @@
 
           <!-- Password field -->
           <ValidationProvider
+            immediate
             v-slot="{ errors }"
             rules="min:8|max:30|required"
             vid="password"
@@ -79,8 +81,8 @@ export default {
   data() {
     return {
       login: {
-        identifier: 'josephpire.dev@gmail.com',
-        password: 'zryt2465',
+        identifier: '',
+        password: '',
       },
       errorMesssage: '',
       loginErrorMessage: '',
