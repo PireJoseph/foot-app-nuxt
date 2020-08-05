@@ -269,6 +269,10 @@ export default {
       this.loading = true
       try {
         await this.$axios.put('/users/' + this.user.id, this.user)
+        this.$buefy.toast.open({
+          message: 'Profile updated successfully',
+          type: 'is-success',
+        })
       } catch (error) {
         if (error.response.status === 400) {
           switch (this.getMessagefromError(error).id) {
@@ -298,6 +302,10 @@ export default {
         const response = await this.$axios.post('/upload', formData)
         const avatar = response.data[0]
         this.user.avatar = avatar
+        this.$buefy.toast.open({
+          message: 'Avatar updated successfully',
+          type: 'is-success',
+        })
       } catch (error) {
         this.errorMesssage = 'avatar upload failed :c'
       }
@@ -311,6 +319,9 @@ export default {
       const date = new Date()
       date.setFullYear(date.getFullYear() - 100)
       return date
+    },
+    getMessagefromError(error) {
+      return error.response.data.message[0].messages[0]
     },
   },
 }
