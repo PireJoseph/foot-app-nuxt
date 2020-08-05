@@ -6,8 +6,8 @@
         <form>
           <!-- username -->
           <ValidationProvider
-            immediate
             v-slot="{ errors }"
+            immediate
             rules="min:8|max:30|required"
           >
             <b-field
@@ -28,8 +28,8 @@
 
           <!-- Email field -->
           <ValidationProvider
-            immediate
             v-slot="{ errors }"
+            immediate
             rules="email|min:8|max:30|required"
           >
             <b-field
@@ -52,8 +52,8 @@
 
           <!-- Password field -->
           <ValidationProvider
-            immediate
             v-slot="{ errors }"
+            immediate
             rules="min:8|max:30|required"
             vid="password"
           >
@@ -77,8 +77,8 @@
 
           <!-- Confirm field -->
           <ValidationProvider
-            immediate
             v-slot="{ errors }"
+            immediate
             rules="min:8|max:30|required|confirmed:password"
           >
             <b-field
@@ -148,14 +148,15 @@ export default {
       this.loading = true
       try {
         delete this.$axios.defaults.headers.common.Authorization
-        const response = await this.$axios.post(
-          '/auth/local/register',
-          this.registration
-        )
-        const user = response.data.user
-        const token = response.data.jwt
-        this.$auth.setToken('local', `Bearer ${token}`)
-        this.$auth.setUser(user)
+        // const response = await this.$axios.post(
+        //   '/auth/local/register',
+        //   this.registration
+        // )
+        // const user = response.data.user
+        // const token = response.data.jwt
+        // this.$auth.setToken('local', `Bearer ${token}`)
+        // this.$auth.setUser(user)
+        await this.$axios.post('/auth/local/register', this.registration)
       } catch (error) {
         if (error.response.status === 400) {
           switch (this.getMessagefromError(error).id) {
@@ -171,6 +172,23 @@ export default {
         } else {
           this.errorMesssage = 'unknow registration problem :c'
         }
+      }
+      try {
+        const response = await this.$auth.loginWith('local', {
+          data: {
+            identifier: this.registration.email,
+            password: this.registration.password,
+          },
+        })
+        const user = response.data.user
+        const token = response.data.jwt
+        this.$auth.setUser(user)
+        this.$auth.setToken('local', `Bearer ${token}`)
+      } catch (err) {
+        if (err.response.status === 400) {
+          this.loginErrorMessage = 'Incorrect credentials'
+        }
+        this.errorMesssage = 'login failed'
       }
       this.loading = false
     },

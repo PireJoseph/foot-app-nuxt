@@ -6,8 +6,8 @@
         <form>
           <!-- Email field -->
           <ValidationProvider
-            immediate
             v-slot="{ errors }"
+            immediate
             rules="email|min:8|max:30|required"
           >
             <b-field
@@ -25,8 +25,8 @@
 
           <!-- Password field -->
           <ValidationProvider
-            immediate
             v-slot="{ errors }"
+            immediate
             rules="min:8|max:30|required"
             vid="password"
           >
