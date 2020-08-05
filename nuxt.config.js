@@ -34,7 +34,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['~/plugins/vee-validate.js'],
+  plugins: ['~/plugins/vee-validate.js', '~/plugins/axios.js'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -87,12 +87,16 @@ export default {
             propertyName: 'jwt',
           },
           logout: false,
-          user: false,
+          user: {
+            url: '/users/me',
+            method: 'get',
+            propertyName: false, // <--- Default "user"
+          },
         },
         tokenRequired: true,
         // tokenType: 'bearer',
         // globalToken: true,
-        autoFetchUser: false,
+        autoFetchUser: true,
       },
     },
     redirect: {
