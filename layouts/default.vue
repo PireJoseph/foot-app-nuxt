@@ -69,17 +69,17 @@
     </section>
 
     <section class="footer-container">
-      <Footer />
+      <FooterPartial />
     </section>
   </div>
 </template>
 
 <script>
-import Footer from '~/layouts/partials/footer'
+import FooterPartial from '~/layouts/partials/FooterPartial'
 
 export default {
   components: {
-    Footer,
+    FooterPartial,
   },
   data() {
     return {
@@ -92,8 +92,14 @@ export default {
         },
         {
           title: 'Profile',
-          icon: 'card-account-details-outline',
+          icon: 'card-account-details',
           to: { name: 'profile' },
+          guest: false,
+        },
+        {
+          title: 'Community',
+          icon: 'account-group',
+          to: { name: 'community' },
           guest: false,
         },
         {
