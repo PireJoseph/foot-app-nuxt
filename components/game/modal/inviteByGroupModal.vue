@@ -96,7 +96,7 @@ export default {
   },
   computed: {
     selectedMembersIds() {
-      return this.selectedMembers.lenght
+      return this.selectedMembers.length
         ? this.selectedMembers.map((user) => user.id)
         : []
     },
