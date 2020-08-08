@@ -89,57 +89,9 @@ export default {
       inviteByGroupModalSelectedGame: null,
     }
   },
-
-  computed: {
-    // player of the selected game modal
-    memberModalSelectedGamePlayers() {
-      if (!this.memberModalSelectedGame) {
-        return []
-      } else {
-        const players = this.memberModalSelectedGame.players.map((player) => {
-          // add a team property to each users
-          switch (true) {
-            case this.memberModalSelectedGame.teamAMembers.filter(
-              (member) => member.id === player.id
-            ).length > 0:
-              player.team = 'a'
-              break
-            case this.memberModalSelectedGame.teamBMembers.filter(
-              (member) => member.id === player.id
-            ).length > 0:
-              player.team = 'b'
-              break
-            default:
-              player.team = null
-          }
-          return player
-        })
-        return players
-      }
-    },
-  },
   async mounted() {
     const { data } = await this.$axios.get('/games/me/next')
     this.nextGames = data
-  },
-  watch: {
-    memberModalSelectedGame: {
-      handler(game) {
-        const currentUserId = this.$auth.user.id
-
-        this.joinTeamABtnShown =
-          this.memberModalSelectedGame &&
-          this.memberModalSelectedGame.teamAMembers.filter((member) => {
-            return member.id === currentUserId
-          }).length === 0
-        this.joinTeamBBtnShown =
-          this.memberModalSelectedGame &&
-          this.memberModalSelectedGame.teamBMembers.filter((member) => {
-            return member.id === currentUserId
-          }).length === 0
-      },
-      deep: true,
-    },
   },
   methods: {
     // open show members modal
@@ -164,15 +116,15 @@ export default {
       this.inviteByGroupModalSelectedGame = gameSelected
       this.isInviteByGroupModalActive = true
     },
-    // choose a team for the selected game
-    async joinTeam(letter) {
+    // leave the selected game
+    async leave(id) {
+      const gameSelected = this.nextGames.filter(this.filterGameById(id))[0]
       const { data } = await this.$axios.put(
-        '/games/' + this.memberModalSelectedGame.id + '/join-team/',
-        { team: letter }
+        '/games/' + gameSelected.id + '/leave'
       )
-      this.memberModalSelectedGame = data
+      this.nextGames = this.nextGames.filter(this.filterOutGameById(data.id))
       this.$buefy.toast.open({
-        message: 'Team ' + letter.toUpperCase() + ' joined successfully!',
+        message: 'Game left successfully',
         type: 'is-success',
       })
     },
@@ -180,6 +132,12 @@ export default {
     filterGameById(id) {
       return function (game) {
         return game.id === id
+      }
+    },
+    // used to filter out a game from a game collection based on id
+    filterOutGameById(id) {
+      return function (game) {
+        return game.id !== id
       }
     },
   },
