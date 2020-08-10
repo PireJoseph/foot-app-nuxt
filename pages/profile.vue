@@ -125,7 +125,7 @@
                   v-model="user.birthDate"
                   name="birthDate"
                   :min-date="getDate100YearsAgo()"
-                  :max-date="getDate10YeardAgo()"
+                  :max-date="getDate10YearsAgo()"
                   :years-range="[-100, 100]"
                   @input="birthDateErrorMessage = ''"
                 ></b-datepicker>
@@ -310,7 +310,7 @@ export default {
         this.errorMesssage = 'avatar upload failed :c'
       }
     },
-    getDate10YeardAgo() {
+    getDate10YearsAgo() {
       const date = new Date()
       date.setFullYear(date.getFullYear() - 10)
       return date
