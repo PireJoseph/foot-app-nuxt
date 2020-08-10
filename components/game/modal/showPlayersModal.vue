@@ -4,7 +4,7 @@
       <p class="modal-card-title">
         Players
       </p>
-      <div class="buttons">
+      <div v-if="canJoinTeams" class="buttons">
         <b-button v-if="joinTeamABtnShown" @click="joinTeam('a')"
           >Join team A</b-button
         >
@@ -32,6 +32,10 @@ export default {
     game: {
       type: Object,
       default: null,
+    },
+    canJoinTeams: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
@@ -110,8 +114,6 @@ export default {
     },
     computeJoinBtnVisibility(game) {
       const currentUserId = this.$auth.user.id
-      console.log(this.$auth.loggedIn)
-      console.log(currentUserId)
       this.joinTeamABtnShown =
         this.selectedGame &&
         this.selectedGame.teamAMembers.filter((member) => {
