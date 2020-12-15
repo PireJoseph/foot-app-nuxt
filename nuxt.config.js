@@ -59,6 +59,7 @@ export default {
     'nuxt-buefy',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/onesignal',
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
   ],
@@ -101,6 +102,18 @@ export default {
     },
     redirect: {
       logout: '/login',
+    },
+  },
+
+  oneSignal: {
+    // Use CDN
+    cdn: true,
+    init: {
+      appId: 'cb74e64c-a77b-4c11-b29e-efdb8b1c058c',
+      allowLocalhostAsSecureOrigin: true,
+      welcomeNotification: {
+        disable: false,
+      },
     },
   },
 
