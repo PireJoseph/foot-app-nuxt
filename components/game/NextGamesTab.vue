@@ -64,9 +64,9 @@
 </template>
 
 <script>
-import showPlayersModal from '~/components/game/modal/showPlayersModal'
-import inviteByUsernameModal from '~/components/game/modal/inviteByUsernameModal'
-import inviteByGroupModal from '~/components/game/modal/inviteByGroupModal'
+import showPlayersModal from '~/components/game/modal/ShowPlayersModal'
+import inviteByUsernameModal from '~/components/game/modal/InviteByUsernameModal'
+import inviteByGroupModal from '~/components/game/modal/InviteByGroupModal'
 
 export default {
   components: {
